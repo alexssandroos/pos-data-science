@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="11.0">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="114" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" FileFormat="19" SearchSubDirs="False" RecordLimit="">W:\MSOneDrive\OneDrive\CONJECTO\Academics\KnowledgeManagement\UNI7DataScienceClass\Material\Tools\Alteryx\Datasets\IDHMBR2010.yxdb</File>
+          <FormatSpecificOptions />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>IDHMBR2010.yxdb</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="ID" source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="Int32" />
+            <Field name="Ano " source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="Int16" />
+            <Field name="Código Estado " source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="Byte" />
+            <Field name="Nome do Estado" size="19" source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="V_String" />
+            <Field name="Código do município" source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="Int32" />
+            <Field name="Codmun7" source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="Int32" />
+            <Field name=" Nome do Município" size="32" source="File: C:\Alteryx\POC\BRPublic\PMFSDE\estudos\Atlas\Atlas 2013 - IDHM Municipios.xls|`'Var IDH MUN 10$'`" type="V_String" />
+            <Field name="Percentual da população de 5 a 6 anos de idade frequentando a es" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Percentual da população de 11 a 13 anos de idade frequentando os" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Percentual da população de 15 a 17 anos com fundamental completo" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Percentual da população de 18 a 20 anos de idade com o ensino mé" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Subíndice de frequência escolar da população jovem - IDHM Educaç" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Percentual da população de 18 anos ou mais com fundamental compl" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Subíndice de escolaridade fundamental da população adulta - IDHM" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Índice de Desenvolvimento Humano Municipal - Dimensão Educação" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Esperança de vida ao nascer" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Índice de Desenvolvimento Humano Municipal  - Dimensão Longevida" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Renda per capita média" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Índice de Desenvolvimento Humano Municipal - Dimensão Renda" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+            <Field name="Índice de Desenvolvimento Humano Municipal" source="Formula: ReplaceChar(ReplaceChar([_CurrentField_],'.',''),',','.')" type="Double" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="2">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="390" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Simple</Mode>
+          <Simple>
+            <Field>IDHM</Field>
+            <Operator>&gt;=</Operator>
+            <Operands>
+              <Operand>0.8</Operand>
+            </Operands>
+          </Simple>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[IDHM] &gt;= 0.8</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="258" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <SelectFields>
+            <SelectField field="Código Estado " selected="True" />
+            <SelectField field="Nome do Estado" selected="True" />
+            <SelectField field=" Nome do Município" selected="True" />
+            <SelectField field="Renda per capita média" selected="True" />
+            <SelectField field="Índice de Desenvolvimento Humano Municipal" selected="True" rename="IDHM" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="546" y="66" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="IDHM" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>IDHM - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="5">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="774" y="30" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_12296_8ed22fc684a2418ab041d49d11668a3e_\Engine_11472_3dd0aac2982e41c4a60d69742c1d2a3d_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="6">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="702" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Nome do Estado" action="GroupBy" rename="Nome do Estado" />
+            <SummarizeField field="Nome do Estado" action="Count" rename="Quantidade" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="7">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="834" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="Quantidade" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Quantidade - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="8">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="990" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_12296_8ed22fc684a2418ab041d49d11668a3e_\Engine_11472_2a755c517fff4865bc0467dac1a19dc8_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="3" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="2" Connection="True" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="5" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="6" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="6" Connection="Output" />
+      <Destination ToolID="7" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Output" />
+      <Destination ToolID="8" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="False" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>ExercicioIDHMR1</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>

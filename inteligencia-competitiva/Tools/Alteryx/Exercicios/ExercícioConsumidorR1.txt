@@ -1,0 +1,21 @@
+1) Quais as 10 cidades do interior do Rio de Janeiro com maior volume de reclamações?
+
+2) Qual o tempo médio de atendimento nessas cidades? Apresente um histograma do tempo registrado na base de dados.
+
+3) Existe correlação entre número de reclamações e tempo médio de atendimento por empresa? E em relação às cidades?
+
+4) Gere um relatório em PDF com o número de reclamações para cada 1000 habitantes e o tempo médio de atendimento por tipo de reclamação?
+
+5) Quais as cidades que têm a menor taxa de reclamação em relação à população? Indique essas cidades em um mapa.
+
+6) Quais as cidades que possuem número de reclamações maior que 100?
+
+7) Quantas cidades possuem número de reclamações maior que a número de reclamações da cidade do Rio de Janeiro?
+
+8) Quais os tipos de reclamação que ocorrem em São Paulo possuem tempo médio de atendimento maior quando comparados à cidade do Rio de Janeiro?
+
+9) Quais os 5 tipos de reclamação mais comuns nas cidades do Rio de Janeiro?
+
+10) Quais os 10 tipos de reclamação mais comuns no RJ que também estão entre os 10 tipos mais comuns de reclamação em SP? 
+
+

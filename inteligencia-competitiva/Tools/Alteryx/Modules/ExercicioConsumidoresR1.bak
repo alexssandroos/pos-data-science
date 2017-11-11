@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="11.0">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="42" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" FileFormat="19" SearchSubDirs="False" RecordLimit="">W:\MSOneDrive\OneDrive\CONJECTO\Academics\KnowledgeManagement\UNI7DataScienceClass\Material\Tools\Alteryx\Datasets\Consumidores.yxdb</File>
+          <FormatSpecificOptions />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Consumidores.yxdb</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Região" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="UF" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Cidade" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Sexo" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Faixa Etária" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Ano Abertura" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Mês Abertura" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Data Abertura" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Data Resposta" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Data Finalização" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Tempo Resposta" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Nome Fantasia" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Segmento de Mercado" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Área" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Assunto" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Grupo Problema" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Problema" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Como Comprou Contratou" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Procurou Empresa" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Respondida" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Situação" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Avaliação Reclamação" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Nota do Consumidor" size="254" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="2">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="270" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <SelectFields>
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AutoField.AutoField">
+        <Position x="150" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Fields>
+            <Field field="Região" selected="True" />
+            <Field field="UF" selected="True" />
+            <Field field="Cidade" selected="True" />
+            <Field field="Sexo" selected="True" />
+            <Field field="Faixa Etária" selected="True" />
+            <Field field="Ano Abertura" selected="True" />
+            <Field field="Mês Abertura" selected="True" />
+            <Field field="Data Abertura" selected="True" />
+            <Field field="Data Resposta" selected="True" />
+            <Field field="Data Finalização" selected="True" />
+            <Field field="Tempo Resposta" selected="True" />
+            <Field field="Nome Fantasia" selected="True" />
+            <Field field="Segmento de Mercado" selected="True" />
+            <Field field="Área" selected="True" />
+            <Field field="Assunto" selected="True" />
+            <Field field="Grupo Problema" selected="True" />
+            <Field field="Problema" selected="True" />
+            <Field field="Como Comprou Contratou" selected="True" />
+            <Field field="Procurou Empresa" selected="True" />
+            <Field field="Respondida" selected="True" />
+            <Field field="Situação" selected="True" />
+            <Field field="Avaliação Reclamação" selected="True" />
+            <Field field="Nota do Consumidor" selected="True" />
+            <Field field="*Unknown" selected="True" />
+          </Fields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Região" size="2" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="UF" size="2" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Cidade" size="32" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Sexo" size="1" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Faixa Etária" size="18" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Ano Abertura" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="Int16" />
+            <Field name="Mês Abertura" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="Byte" />
+            <Field name="Data Abertura" size="10" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Data Resposta" size="10" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Data Finalização" size="10" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Tempo Resposta" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="Byte" />
+            <Field name="Nome Fantasia" size="39" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Segmento de Mercado" size="71" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Área" size="39" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Assunto" size="161" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Grupo Problema" size="22" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Problema" size="116" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Como Comprou Contratou" size="23" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="V_String" />
+            <Field name="Procurou Empresa" size="1" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Respondida" size="1" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Situação" size="23" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Avaliação Reclamação" size="13" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="String" />
+            <Field name="Nota do Consumidor" source="File: C:\Alteryx\POC\BRPublic\Consumidores\2015-01.csv" type="Byte" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxAutoField" />
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="498" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Simple</Mode>
+          <Simple>
+            <Field>Área</Field>
+            <Operator>=</Operator>
+            <Operands>
+              <Operand>telecomunicacoes</Operand>
+            </Operands>
+          </Simple>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[Área] = "telecomunicacoes"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="6">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="378" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="DecomposeUnicodeForMatch([Área])" field="Área" size="39" type="V_String" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText><![CDATA[Área = DecomposeUnicodeForMatch([Área])
+]]></DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="7">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="630" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Expression>[UF] == "CE" &amp;&amp;
+[Cidade] != "Fortaleza"</Expression>
+          <Mode>Custom</Mode>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[UF] == "CE" &amp;&amp;
+[Cidade] != "Fortaleza"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="8">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1086" y="30" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_20444_889369b2c10e4aa6a96de46d9a4f9825_\Engine_11472_646424d3975f4475877ac43f332d57f5_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="9">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="762" y="30" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Cidade" action="GroupBy" rename="Cidade" />
+            <SummarizeField field="Cidade" action="Count" rename="Count" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="10">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="882" y="30" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="Count" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Count - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="11">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sample.Sample">
+        <Position x="990" y="30" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields orderChanged="False" />
+          <Mode>First</Mode>
+          <N>10</N>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>First 10</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSample" />
+    </Node>
+    <Node ToolID="12">
+      <GuiSettings>
+        <Position x="1086" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="Ranges">1-10</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+      </Properties>
+      <EngineSettings Macro="SelectRecords.yxmc" />
+    </Node>
+    <Node ToolID="13">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1230" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_20444_889369b2c10e4aa6a96de46d9a4f9825_\Engine_11472_bcc41e889c22427183fe482bd768c394_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="3" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="2" Connection="Output" />
+      <Destination ToolID="6" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="True" />
+      <Destination ToolID="7" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="6" Connection="Output" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="True" />
+      <Destination ToolID="9" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="11" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="11" Connection="Output" />
+      <Destination ToolID="8" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="11" Connection="Output" />
+      <Destination ToolID="12" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="12" Connection="Output" />
+      <Destination ToolID="13" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="False" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>ExercicioConsumidoresR1</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>

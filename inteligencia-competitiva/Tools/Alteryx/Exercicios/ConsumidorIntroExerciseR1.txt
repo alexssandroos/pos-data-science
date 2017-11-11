@@ -1,0 +1,19 @@
+1) Quais as 10 cidades do interior do Ceará que possuem mais reclamações na área de 'Telecomunicações'? Em que estados do Brasil as reclamações de 'Serviços Financeiros' são maiores que 'Telecomunicações'? 
+
+2) Qual o tempo médio de atendimento nas cidades do Ceará? Apresente um histograma do tempo registrado na base de dados. (Existe uma ferramenta para mostrar histograma em Data Investigation).
+
+3) Quais as cidades que têm a menor taxa de reclamação em relação à população? Indique essas cidades em um mapa.
+
+4) Quem reclama mais no Ceará, o homem ou a mulher? Qual o percentual de reclamação de homens e mulheres em relação ao total? (Pode usar Group By e Transpose para cada UF)
+
+5) Quantas cidades com população menor que 20000 habitantes possuem número de reclamações maior que 100 por UF? Quais as 5 UFs com maior número de cidades que atendem esse critério?
+
+6) Quais as cidades do Brasil possuem número de reclamações maior que o número de reclamações da cidade de Fortaleza?
+
+7) Quais os tipos de reclamação que ocorrem no Fortaleza que são maiores que na cidade de Recife?
+
+8) Quais os 10 tipos de reclamação mais comuns no Ceará que também estão entre os 10 tipos mais comuns de reclamação em Pernambuco? 
+
+9) Existe correlação entre número de reclamações e tempo médio de atendimento por empresa? E em relação às cidades?
+
+10) Gere um relatório em PDF com o número de reclamações para cada cidade acima 10000 habitantes e o tempo médio de atendimento? YXDB

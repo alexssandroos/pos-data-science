@@ -1,0 +1,21 @@
+﻿Exercícios CAGED
+
+1) Quantos empregos foram gerados nas cidades com população acima de 5000 e menor que 50000 habitantes? Como esses empregos foram divididos por sexo? 
+
+2) Qual o salário médio de homens e mulheres (admitidos e demitidos)? Quais as 10 cidades com maior salário médio para admitidos?
+
+3) Quais as 10 principais cidades onde houve maior perda salarial?
+
+4) Quais os setores do IBGE onde houve retração de empregos? Qual o total de demissões nesses setores?
+
+5) Quais os setores do IBGE onde houve expansão no número de empregos? Qual o total de admissões nesses setores?
+
+6) Quais as cidades que admitiram mais homens que mulheres?
+
+7) Quais as cidades que demitiram mais homens que mulheres?
+
+8) Existe alguma correlação entre IDHM Educação e Saldo de Empregos? Existe alguma correlação entre IDHM Renda e Demitidos?
+
+9) Quais as faixas de escolaridade mais afetadas com o desemprego no mês de maio/2015?
+
+10) Existe alguma correlação entre PIB per Capita e admissões nesse período? E entre PIB per Capita e demissões?
