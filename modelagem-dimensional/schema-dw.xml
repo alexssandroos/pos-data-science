@@ -1,0 +1,28 @@
+<Schema name="COMERCIAL" measuresCaption="METRICAS DE NEGOCIO">
+  <Cube name="pedidos" caption="Pedidos" visible="true" description="Datamart - Pedidos" cache="true" enabled="true">
+    <Table name="fato_pedidos" schema="public" alias="">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="fk_vendedor" name="vendedores" caption="Vendedores">
+      <Hierarchy visible="true" hasAll="true" allMemberCaption="Todos os Vendedores" primaryKey="fk_vendedor">
+        <Table name="dim_vendedor" schema="public" alias="">
+        </Table>
+        <Level name="vendedor" visible="true" column="vendedor" uniqueMembers="false" caption="Vendedor">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="TimeDimension" visible="true" foreignKey="fk_tempo" name="tempo" caption="Periodo">
+      <Hierarchy visible="true" hasAll="true" allMemberCaption="Todos os Periodos" primaryKey="fk_tempo">
+        <Table name="dim_tempo" schema="public" alias="">
+        </Table>
+        <Level name="ano" visible="true" column="ano" uniqueMembers="false" levelType="TimeYears" caption="Ano">
+        </Level>
+        <Level name="trimestre" visible="true" column="trimestre" uniqueMembers="false" levelType="TimeQuarters" caption="Trimestre">
+        </Level>
+        <Level name="mes" visible="true" column="mes" uniqueMembers="false" levelType="TimeMonths" caption="M&#234;s" captionColumn="descmes">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="valor" column="vlr_venda" datatype="Numeric" aggregator="sum" caption="Valor da Venda" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
