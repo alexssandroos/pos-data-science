@@ -4,20 +4,15 @@
   <extended_description />
   <job_version />
   <job_status>0</job_status>
-  <directory>/etl/job</directory>
+  <directory>/avaliacao</directory>
   <created_user>-</created_user>
   <created_date>2018/03/17 11:09:25.533</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2018/03/24 13:42:43.040</modified_date>
+  <modified_date>2018/03/24 13:45:40.695</modified_date>
   <parameters>
     <parameter>
       <name>ANO</name>
-      <default_value>2017</default_value>
-      <description />
-    </parameter>
-    <parameter>
-      <name>MES</name>
-      <default_value>07</default_value>
+      <default_value />
       <description />
     </parameter>
   </parameters>
@@ -324,7 +319,7 @@
       <trans_object_id />
       <filename />
       <transname>TR_CLEAR_DATA</transname>
-      <directory>/etl/ktr</directory>
+      <directory>${Internal.Entry.Current.Directory}</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
@@ -350,11 +345,6 @@
           <name>ANO</name>
           <stream_name />
           <value>${ANO}</value>
-        </parameter>
-        <parameter>
-          <name>MES</name>
-          <stream_name />
-          <value>${MES}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
@@ -364,14 +354,14 @@
       <yloc>100</yloc>
     </entry>
     <entry>
-      <name>TR_INPUT_DATA</name>
+      <name>TR_LOAD_PAGAMENTOS</name>
       <description />
       <type>TRANS</type>
       <specification_method>rep_name</specification_method>
       <trans_object_id />
       <filename />
-      <transname>TR_INPUT_DATA</transname>
-      <directory>/etl/ktr</directory>
+      <transname>TR_LOAD_PAGAMENTOS</transname>
+      <directory>${Internal.Entry.Current.Directory}</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
@@ -398,16 +388,11 @@
           <stream_name />
           <value>${ANO}</value>
         </parameter>
-        <parameter>
-          <name>MES</name>
-          <stream_name />
-          <value>${MES}</value>
-        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>544</xloc>
+      <xloc>720</xloc>
       <yloc>96</yloc>
     </entry>
     <entry>
@@ -417,7 +402,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>744</xloc>
+      <xloc>976</xloc>
       <yloc>96</yloc>
     </entry>
     <entry>
@@ -428,8 +413,50 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>224</yloc>
+      <xloc>560</xloc>
+      <yloc>256</yloc>
+    </entry>
+    <entry>
+      <name>TR_INPUT_PESSOAS</name>
+      <description />
+      <type>TRANS</type>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id />
+      <filename />
+      <transname>TR_LOAD_PESSOAS</transname>
+      <directory>${Internal.Entry.Current.Directory}</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>ANO</name>
+          <stream_name />
+          <value>${ANO}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>560</xloc>
+      <yloc>96</yloc>
     </entry>
   </entries>
   <hops>
@@ -443,16 +470,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>TR_CLEAR_DATA</from>
-      <to>TR_INPUT_DATA</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>TR_INPUT_DATA</from>
+      <from>TR_LOAD_PAGAMENTOS</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -470,7 +488,34 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>TR_INPUT_DATA</from>
+      <from>TR_LOAD_PAGAMENTOS</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>TR_CLEAR_DATA</from>
+      <to>TR_INPUT_PESSOAS</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>TR_INPUT_PESSOAS</from>
+      <to>TR_LOAD_PAGAMENTOS</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>TR_INPUT_PESSOAS</from>
       <to>Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

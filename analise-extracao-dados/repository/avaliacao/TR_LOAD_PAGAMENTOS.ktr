@@ -1,27 +1,29 @@
 <transformation>
   <info>
-    <name>TR_GENERATE_RESULT_FI</name>
+    <name>TR_LOAD_PAGAMENTOS</name>
     <description />
-    <extended_description />
+    <extended_description>DDL TABLE
+CREATE TABLE "public".RECEBIMENTO
+(
+  id_pagamento INT
+, codigo_pessoa INT
+, nome_pessoa TEXT
+, universidade TEXT
+, curso TEXT
+, Rubrica TEXT
+, data_recebimento TIMESTAMP
+, Valor DOUBLE PRECISION
+)
+;</extended_description>
     <trans_version />
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
-    <directory>/etl/ktr</directory>
+    <directory>/avaliacao</directory>
     <parameters>
       <parameter>
-        <name>COMPETENCIA_FI</name>
-        <default_value />
-        <description />
-      </parameter>
-      <parameter>
-        <name>COMPETENCIA_IN</name>
-        <default_value />
-        <description />
-      </parameter>
-      <parameter>
-        <name>QTD_COMPETENCIA</name>
-        <default_value />
-        <description />
+        <name>ANO</name>
+        <default_value>2016</default_value>
+        <description>ANO DO ARQUIVO A SER IMPORTADO</description>
       </parameter>
     </parameters>
     <log>
@@ -442,13 +444,40 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2018/03/17 13:57:40.239</created_date>
+    <created_date>2018/03/24 12:50:03.438</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2018/03/24 13:27:39.635</modified_date>
+    <modified_date>2018/03/24 14:26:03.074</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>TR_LOAD_PAGAMENTOS	
+
+PARAMETROS:
+ANO : INT
+---------------------------------------
+CARREGA OS ARQUIVOS VINDOS DA PASTA /data NO PATH DO PDI
+</note>
+      <xloc>16</xloc>
+      <yloc>208</yloc>
+      <width>516</width>
+      <heigth>161</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>255</fontcolorred>
+      <fontcolorgreen>255</fontcolorgreen>
+      <fontcolorblue>255</fontcolorblue>
+      <backgroundcolorred>0</backgroundcolorred>
+      <backgroundcolorgreen>128</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>POSTGRESQL</name>
@@ -503,39 +532,49 @@
   </connection>
   <order>
     <hop>
-      <from>01:IN:GENERATE_ROWS</from>
-      <to>02:TR:GET_VARIABLES</to>
+      <from>02:IN:DIM_PESSOAS</from>
+      <to>06:TR:MERGE</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>02:TR:GET_VARIABLES</from>
-      <to>03:TR:ADD_SEQUENCE</to>
+      <from>05:TR:SORT_ROWS</from>
+      <to>06:TR:MERGE</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>03:TR:ADD_SEQUENCE</from>
-      <to>04:TR:CALC_COMPETENCIA</to>
+      <from>06:TR:MERGE</from>
+      <to>07:TR:REMOVE_FIELDS</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>04:TR:CALC_COMPETENCIA</from>
-      <to>05:TR:CALC_ANOMES</to>
+      <from>01:IN:PARAMENTOS_ANO.CSV</from>
+      <to>02:TR:CONVERTE_BINARIOS</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>05:TR:CALC_ANOMES</from>
-      <to>06:TR:REMOVE_FIELDS</to>
+      <from>02:TR:CONVERTE_BINARIOS</from>
+      <to>03:TR:TORNA_INFORMACAO_SIG_NULL</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>06:TR:REMOVE_FIELDS</from>
-      <to>07:OU:FIELDS_TO_RESULT</to>
+      <from>03:TR:TORNA_INFORMACAO_SIG_NULL</from>
+      <to>04:TR:METADATA</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>04:TR:METADATA</from>
+      <to>05:TR:SORT_ROWS</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>07:TR:REMOVE_FIELDS</from>
+      <to>08:OU:RECEBIMENTO</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>01:IN:GENERATE_ROWS</name>
-    <type>RowGenerator</type>
+    <name>01:IN:PARAMENTOS_ANO.CSV</name>
+    <type>CsvInput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -544,25 +583,76 @@
       <method>none</method>
       <schema_name />
     </partitioning>
+    <filename>${user.dir}\data\PAGAMENTOS_${ANO}.csv</filename>
+    <filename_field />
+    <rownum_field />
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding>UTF-8</encoding>
     <fields>
       <field>
-        <name>_COMPETENCIA</name>
+        <name>ID</name>
         <type>String</type>
         <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Codigo Pessoa</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rubrica</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Data Recebimento</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Valor</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
       </field>
     </fields>
-    <limit>${QTD_COMPETENCIA}</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -572,13 +662,13 @@
     </remotesteps>
     <GUI>
       <xloc>80</xloc>
-      <yloc>80</yloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>02:TR:GET_VARIABLES</name>
-    <type>GetVariable</type>
+    <name>02:IN:DIM_PESSOAS</name>
+    <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -587,66 +677,14 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <fields>
-      <field>
-        <name>COMPETENCIA_FI</name>
-        <variable>${COMPETENCIA_FI}</variable>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>COMPETENCIA_IN</name>
-        <variable>${COMPETENCIA_IN}</variable>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>03:TR:ADD_SEQUENCE</name>
-    <type>Sequence</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <valuename>SEQ</valuename>
-    <use_database>N</use_database>
     <connection>POSTGRESQL</connection>
-    <schema />
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name />
-    <start_at>0</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
+    <sql>select * from public.dim_pessoas
+order by codigo_pessoa</sql>
+    <limit>0</limit>
+    <lookup />
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -655,85 +693,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>80</yloc>
+      <xloc>704</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>04:TR:CALC_COMPETENCIA</name>
-    <type>Formula</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <formula>
-      <field_name>COMPETENCIA</field_name>
-      <formula_string>[COMPETENCIA_IN]+[SEQ]</formula_string>
-      <value_type>Integer</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <replace_field />
-    </formula>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>05:TR:CALC_ANOMES</name>
-    <type>Formula</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <formula>
-      <field_name>ANO</field_name>
-      <formula_string>left([COMPETENCIA];4)</formula_string>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <replace_field />
-    </formula>
-    <formula>
-      <field_name>MES</field_name>
-      <formula_string>RIGHT([COMPETENCIA];2)</formula_string>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <replace_field />
-    </formula>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>608</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>06:TR:REMOVE_FIELDS</name>
+    <name>02:TR:CONVERTE_BINARIOS</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -745,18 +711,91 @@
     </partitioning>
     <fields>
       <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>_COMPETENCIA</name>
-      </remove>
-      <remove>
-        <name>COMPETENCIA_FI</name>
-      </remove>
-      <remove>
-        <name>COMPETENCIA_IN</name>
-      </remove>
-      <remove>
-        <name>SEQ</name>
-      </remove>
+      <meta>
+        <name>ID</name>
+        <rename>ID</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type>normal</storage_type>
+      </meta>
+      <meta>
+        <name>Codigo Pessoa</name>
+        <rename>Codigo Pessoa</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type>normal</storage_type>
+      </meta>
+      <meta>
+        <name>Rubrica</name>
+        <rename>Rubrica</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type>normal</storage_type>
+      </meta>
+      <meta>
+        <name>Data Recebimento</name>
+        <rename>Data Recebimento</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type>normal</storage_type>
+      </meta>
+      <meta>
+        <name>Valor</name>
+        <rename>Valor</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type>normal</storage_type>
+      </meta>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -766,14 +805,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>80</yloc>
+      <xloc>208</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>07:OU:FIELDS_TO_RESULT</name>
-    <type>RowsToResult</type>
+    <name>03:TR:TORNA_INFORMACAO_SIG_NULL</name>
+    <type>NullIf</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -782,6 +821,28 @@
       <method>none</method>
       <schema_name />
     </partitioning>
+    <fields>
+      <field>
+        <name>ID</name>
+        <value>Informação Sigilosa</value>
+      </field>
+      <field>
+        <name>Codigo Pessoa</name>
+        <value>Informação Sigilosa</value>
+      </field>
+      <field>
+        <name>Rubrica</name>
+        <value>Informação Sigilosa</value>
+      </field>
+      <field>
+        <name>Data Recebimento</name>
+        <value>Informação Sigilosa</value>
+      </field>
+      <field>
+        <name>Valor</name>
+        <value>Informação Sigilosa</value>
+      </field>
+    </fields>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -790,8 +851,289 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>176</yloc>
+      <xloc>352</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>04:TR:METADATA</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <meta>
+        <name>ID</name>
+        <rename>ID</rename>
+        <type>Integer</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Codigo Pessoa</name>
+        <rename>codigo_pessoa</rename>
+        <type>Integer</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Rubrica</name>
+        <rename>Rubrica</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Data Recebimento</name>
+        <rename>data_recebimento</rename>
+        <type>Date</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>MM/dd/yyyy</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Valor</name>
+        <rename>Valor</rename>
+        <type>Number</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>464</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>05:TR:SORT_ROWS</name>
+    <type>SortRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory>99</free_memory>
+    <compress>N</compress>
+    <compress_variable />
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>codigo_pessoa</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>06:TR:MERGE</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
+    <step1>05:TR:SORT_ROWS</step1>
+    <step2>02:IN:DIM_PESSOAS</step2>
+    <keys_1>
+      <key>codigo_pessoa</key>
+    </keys_1>
+    <keys_2>
+      <key>codigo_pessoa</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>704</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>07:TR:REMOVE_FIELDS</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>ID</name>
+        <rename>id_pagamento</rename>
+      </field>
+      <field>
+        <name>codigo_pessoa</name>
+      </field>
+      <field>
+        <name>nome_pessoa</name>
+      </field>
+      <field>
+        <name>universidade</name>
+      </field>
+      <field>
+        <name>curso</name>
+      </field>
+      <field>
+        <name>Rubrica</name>
+      </field>
+      <field>
+        <name>data_recebimento</name>
+      </field>
+      <field>
+        <name>Valor</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>864</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>08:OU:RECEBIMENTO</name>
+    <type>TableOutput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>POSTGRESQL</connection>
+    <schema>public</schema>
+    <table>RECEBIMENTO</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field />
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field />
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field />
+    <fields>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
