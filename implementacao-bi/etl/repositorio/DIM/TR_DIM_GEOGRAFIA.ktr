@@ -1,29 +1,23 @@
 <transformation>
   <info>
-    <name>TR_DIM_TEMPO</name>
+    <name>TR_DIM_GEOGRAFIA</name>
     <description/>
-    <extended_description>CREATE TABLE dw.dim_tem_tempo
+    <extended_description>DDL TABLE
+
+CREATE TABLE dw.dim_geografia
 (
-  tem_id int
-, tem_dat TIMESTAMP
-, tem_num_ano int
-, tem_num_mes int
-, tem_num_dia int
-, tem_num_dia_semana int
-, tem_dsc_dia_sem TEXT
-, tem_dsc_mes TEXT
+  geo_cep integer
+, geo_uf TEXT
+, geo_cidade TEXT
+, geo_bairro TEXT
+, geo_sk integer
 )
-;</extended_description>
+</extended_description>
     <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
     <directory>/DIM</directory>
     <parameters>
-      <parameter>
-        <name>QTD_DIAS</name>
-        <default_value>10000</default_value>
-        <description/>
-      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -443,13 +437,39 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2018/05/19 14:37:08.981</created_date>
+    <created_date>2018/05/26 09:33:19.233</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2018/05/26 09:47:30.799</modified_date>
+    <modified_date>2018/05/26 09:53:59.485</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>
+
+
+
+
+TRANSFORM						</note>
+      <xloc>288</xloc>
+      <yloc>128</yloc>
+      <width>346</width>
+      <heigth>100</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>255</fontcolorred>
+      <fontcolorgreen>255</fontcolorgreen>
+      <fontcolorblue>255</fontcolorblue>
+      <backgroundcolorred>0</backgroundcolorred>
+      <backgroundcolorgreen>128</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>dw</name>
@@ -502,71 +522,87 @@
       </attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>erp</name>
+    <server>localhost</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>ERPDemo</database>
+    <port>5432</port>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7f2e4bb16bd64d980aac9</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>5432</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>TR:GENERATE_ROWS</from>
-      <to>TR:ADD_SEQUENCE</to>
+      <from>IN:GET_GEO</from>
+      <to>TR:ADD_SK</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>TR:ADD_SEQUENCE</from>
-      <to>TR:DATE_CONSTANT</to>
+      <from>TR:ADD_SK</from>
+      <to>TR:APPEND_STREAM</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>TR:DATE_CONSTANT</from>
-      <to>TR:CREATE_DATE</to>
+      <from>IN:GENERATE_UNKNOW_GEO</from>
+      <to>TR:APPEND_STREAM</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>TR:CREATE_DATE</from>
-      <to>TR:CREATE_TIME_FIELDS</to>
+      <from>TR:APPEND_STREAM</from>
+      <to>TR:META</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>TR:CREATE_TIME_FIELDS</from>
-      <to>TR:STREAM_SEMANA</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>SEMANA</from>
-      <to>TR:STREAM_SEMANA</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>TR:STREAM_SEMANA</from>
-      <to>TR:STREAM_MES</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>MES</from>
-      <to>TR:STREAM_MES</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>TR:STREAM_MES</from>
-      <to>TR:SELECT_AND_METADATA</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>TR:SELECT_AND_METADATA</from>
-      <to>Append streams</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>IN:GENERATE_NAO_INFORMADO</from>
-      <to>Append streams</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Append streams</from>
-      <to>Table output</to>
+      <from>TR:META</from>
+      <to>OU:DIM_GEOGRAFIA</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Append streams</name>
-    <type>Append</type>
+    <name>IN:GET_GEO</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -575,8 +611,25 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <head_name>IN:GENERATE_NAO_INFORMADO</head_name>
-    <tail_name>TR:SELECT_AND_METADATA</tail_name>
+    <connection>erp</connection>
+    <sql>select 
+	trim(loj_ceploj) geo_cep,
+	loj_ufloj geo_uf, 
+	loj_cidloj geo_cidade, 
+	loj_bailoj geo_bairro
+from public.loja
+union
+select 
+	trim(pes_cep) geo_cep,
+	pes_uf geo_uf,
+	pes_cidade geo_cidade,
+	pes_bairro geo_bairro
+from public.pessoa</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -585,315 +638,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
-      <yloc>208</yloc>
+      <xloc>192</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>IN:GENERATE_NAO_INFORMADO</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>tem_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_dat</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_num_ano</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_num_mes</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_num_dia</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_num_dia_semana</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_dsc_dia_sem</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>tem_dsc_mes</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line>
-        <item>0</item>
-        <item>01/01/1900</item>
-        <item>0000</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>NAO INF</item>
-        <item>NAO INF</item>
-      </line>
-    </data>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>448</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>MES</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>_num_mes</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>_dsc_mes</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line>
-        <item>1</item>
-        <item>JANEIRO</item>
-      </line>
-      <line>
-        <item>2</item>
-        <item>FEVEREIRO</item>
-      </line>
-      <line>
-        <item>3</item>
-        <item>MARÇO</item>
-      </line>
-      <line>
-        <item>4</item>
-        <item>ABRIL</item>
-      </line>
-      <line>
-        <item>5</item>
-        <item>MAIO</item>
-      </line>
-      <line>
-        <item>6</item>
-        <item>JUNHO</item>
-      </line>
-      <line>
-        <item>7</item>
-        <item>JULHO</item>
-      </line>
-      <line>
-        <item>8</item>
-        <item>AGOSTO</item>
-      </line>
-      <line>
-        <item>9</item>
-        <item>SETEMBRO</item>
-      </line>
-      <line>
-        <item>10</item>
-        <item>OUTUBRO</item>
-      </line>
-      <line>
-        <item>11</item>
-        <item>NOVEMBRO</item>
-      </line>
-      <line>
-        <item>12</item>
-        <item>DEZEMBRO</item>
-      </line>
-    </data>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>SEMANA</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>_num_dia_sem</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>_dsc_dia_sem</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line>
-        <item>1</item>
-        <item>DOMINGO</item>
-      </line>
-      <line>
-        <item>2</item>
-        <item>SEGUNDA</item>
-      </line>
-      <line>
-        <item>3</item>
-        <item>TERCA</item>
-      </line>
-      <line>
-        <item>4</item>
-        <item>QUARTA</item>
-      </line>
-      <line>
-        <item>5</item>
-        <item>QUINTA</item>
-      </line>
-      <line>
-        <item>6</item>
-        <item>SEXTA</item>
-      </line>
-      <line>
-        <item>7</item>
-        <item>SABADO</item>
-      </line>
-    </data>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>TR:ADD_SEQUENCE</name>
+    <name>TR:ADD_SK</name>
     <type>Sequence</type>
     <description/>
     <distribute>Y</distribute>
@@ -903,7 +654,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <valuename>_sequence</valuename>
+    <valuename>geo_sk</valuename>
     <use_database>N</use_database>
     <connection/>
     <schema/>
@@ -921,137 +672,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>176</xloc>
-      <yloc>80</yloc>
+      <xloc>336</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>TR:CREATE_DATE</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <calculation>
-      <field_name>tem_dat</field_name>
-      <calc_type>ADD_DAYS</calc_type>
-      <field_a>_dat_ini</field_a>
-      <field_b>_sequence</field_b>
-      <field_c/>
-      <value_type>Date</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask>yyyyMMdd</conversion_mask>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>TR:CREATE_TIME_FIELDS</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <calculation>
-      <field_name>tem_num_ano</field_name>
-      <calc_type>YEAR_OF_DATE</calc_type>
-      <field_a>tem_dat</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>Integer</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask>#</conversion_mask>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>tem_num_mes</field_name>
-      <calc_type>MONTH_OF_DATE</calc_type>
-      <field_a>tem_dat</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>Integer</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>tem_num_dia</field_name>
-      <calc_type>DAY_OF_MONTH</calc_type>
-      <field_a>tem_dat</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>Integer</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>tem_num_dia_semana</field_name>
-      <calc_type>DAY_OF_WEEK</calc_type>
-      <field_a>tem_dat</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>Integer</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>TR:DATE_CONSTANT</name>
-    <type>Constant</type>
+    <name>IN:GENERATE_UNKNOW_GEO</name>
+    <type>DataGrid</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1062,61 +690,70 @@
     </partitioning>
     <fields>
       <field>
-        <name>_dat_ini</name>
-        <type>Date</type>
-        <format>yyyyMMdd</format>
+        <name>geo_cep</name>
+        <type>String</type>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif>20000101</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
       </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>TR:GENERATE_ROWS</name>
-    <type>RowGenerator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
       <field>
-        <name>_line</name>
+        <name>geo_uf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>geo_cidade</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>geo_bairro</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>geo_sk</name>
         <type>Integer</type>
-        <format>#</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif>0</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
       </field>
     </fields>
-    <limit>${QTD_DIAS}</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
+    <data>
+      <line>
+        <item>0</item>
+        <item>NAO INF</item>
+        <item>NAO INFORMADO</item>
+        <item>NAO INFORMADO</item>
+        <item>0</item>
+      </line>
+    </data>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -1125,13 +762,39 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
-      <yloc>80</yloc>
+      <xloc>464</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>TR:SELECT_AND_METADATA</name>
+    <name>TR:APPEND_STREAM</name>
+    <type>Append</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <head_name>TR:ADD_SK</head_name>
+    <tail_name>IN:GENERATE_UNKNOW_GEO</tail_name>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>464</xloc>
+      <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>TR:META</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1142,71 +805,13 @@
       <schema_name/>
     </partitioning>
     <fields>
-      <field>
-        <name>_sequence</name>
-      </field>
-      <field>
-        <name>tem_dat</name>
-      </field>
-      <field>
-        <name>tem_num_ano</name>
-      </field>
-      <field>
-        <name>tem_num_mes</name>
-      </field>
-      <field>
-        <name>tem_num_dia</name>
-      </field>
-      <field>
-        <name>tem_num_dia_semana</name>
-      </field>
-      <field>
-        <name>_dsc_dia_sem</name>
-      </field>
-      <field>
-        <name>_dsc_mes</name>
-      </field>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>_sequence</name>
-        <rename>tem_id</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>tem_dat</name>
-        <rename>tem_dat</rename>
-        <type>Date</type>
+        <name>geo_cep</name>
+        <rename>geo_cep</rename>
+        <type>Integer</type>
         <length>-2</length>
         <precision>-2</precision>
-        <conversion_mask>dd/MM/yyyy</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>tem_num_ano</name>
-        <rename>tem_num_ano</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>0</precision>
         <conversion_mask/>
         <date_format_lenient>false</date_format_lenient>
         <date_format_locale/>
@@ -1219,59 +824,8 @@
         <storage_type/>
       </meta>
       <meta>
-        <name>tem_num_mes</name>
-        <rename>tem_num_mes</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>tem_num_dia</name>
-        <rename>tem_num_dia</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>tem_num_dia_semana</name>
-        <rename>tem_num_dia_semana</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>_dsc_dia_sem</name>
-        <rename>tem_dsc_dia_sem</rename>
+        <name>geo_uf</name>
+        <rename>geo_uf</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -1287,8 +841,42 @@
         <storage_type/>
       </meta>
       <meta>
-        <name>_dsc_mes</name>
-        <rename>tem_dsc_mes</rename>
+        <name>geo_cidade</name>
+        <rename>geo_cidade</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>geo_bairro</name>
+        <rename>geo_bairro</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>geo_sk</name>
+        <rename>geo_sk</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -1312,95 +900,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>208</yloc>
+      <xloc>560</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>TR:STREAM_MES</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>MES</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>tem_num_mes</name>
-        <field>_num_mes</field>
-      </key>
-      <value>
-        <name>_dsc_mes</name>
-        <rename>_dsc_mes</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>776</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>TR:STREAM_SEMANA</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>SEMANA</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>tem_num_dia_semana</name>
-        <field>_num_dia_sem</field>
-      </key>
-      <value>
-        <name>_dsc_dia_sem</name>
-        <rename>_dsc_dia_sem</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>776</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output</name>
+    <name>OU:DIM_GEOGRAFIA</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1412,9 +918,9 @@
     </partitioning>
     <connection>dw</connection>
     <schema>dw</schema>
-    <table>dim_tem_tempo</table>
+    <table>dim_geografia</table>
     <commit>1000</commit>
-    <truncate>N</truncate>
+    <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
     <specify_fields>N</specify_fields>
@@ -1437,8 +943,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>208</yloc>
+      <xloc>760</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

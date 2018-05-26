@@ -1,0 +1,92 @@
+<Schema name="Venda" measuresCaption="Medidas">
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Tempo">
+    <Hierarchy visible="true" hasAll="true" allMemberCaption="Todo Periodo" primaryKey="tem_id">
+      <Table name="dim_tem_tempo" schema="dw">
+      </Table>
+      <Level name="Ano" visible="true" column="tem_num_ano" uniqueMembers="false" levelType="TimeYears">
+      </Level>
+      <Level name="Mes" visible="true" column="tem_num_mes" uniqueMembers="false" levelType="TimeMonths" captionColumn="tem_dsc_mes">
+      </Level>
+      <Level name="Dia" visible="true" column="tem_num_dia" uniqueMembers="false" levelType="TimeDays">
+      </Level>
+      <Level name="Data" visible="true" column="tem_dat" uniqueMembers="false" levelType="TimeDays">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Geografia">
+    <Hierarchy visible="true" hasAll="true" primaryKey="geo_sk">
+      <Table name="dim_geografia" schema="dw" alias="">
+      </Table>
+      <Level name="UF" visible="true" column="geo_uf" uniqueMembers="false">
+      </Level>
+      <Level name="Cidade" visible="true" column="geo_cidade" uniqueMembers="false">
+      </Level>
+      <Level name="Bairro" visible="true" column="geo_bairro" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Pessoa">
+    <Hierarchy visible="true" hasAll="true" primaryKey="pes_sk">
+      <Table name="dim_pessoa" schema="dw" alias="">
+      </Table>
+      <Level name="Tipo " visible="true" column="pes_tip" uniqueMembers="false">
+      </Level>
+      <Level name="Descricao" visible="true" column="pes_nom" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Forma Pagamento">
+    <Hierarchy visible="true" hasAll="true" primaryKey="fpgto_sk">
+      <Table name="dim_forma_pag" schema="dw" alias="">
+      </Table>
+      <Level name="Forma Pagamento" visible="true" column="fpg_desfpg" uniqueMembers="false">
+      </Level>
+      <Level name="Prazo" visible="true" column="fpg_przfpg" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Loja">
+    <Hierarchy visible="true" hasAll="true" primaryKey="loj_sk">
+      <Table name="dim_loja" schema="dw" alias="">
+      </Table>
+      <Level name="Loja" visible="true" column="loj_denloj" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Produto">
+    <Hierarchy visible="true" hasAll="true" primaryKey="prod_sk">
+      <Table name="dim_produto" schema="dw" alias="">
+      </Table>
+      <Level name="Grupo Produto" visible="true" column="grp_dscgrp" uniqueMembers="false">
+      </Level>
+      <Level name="Descri&#231;&#227;o Produto" visible="true" column="itm_descri" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Venda" visible="true" cache="true" enabled="true">
+    <Table name="fct_venda" schema="dw" alias="">
+    </Table>
+    <DimensionUsage source="Tempo" name="Tempo" visible="true" foreignKey="tem_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Pessoa" name="Cliente" caption="Cliente" visible="true" foreignKey="cli_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Pessoa" name="Vendedor" caption="Vendedor" visible="true" foreignKey="ven_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Geografia" name="Geografia Compra" caption="Geografia Compra" visible="true" foreignKey="geo_loj_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Geografia" name="Geografia Venda" caption="Geografia Venda" visible="true" foreignKey="geo_cli_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Forma Pagamento" name="Forma Pagamento" visible="true" foreignKey="fpgto_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Loja" name="Loja" visible="true" foreignKey="loj_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Produto" name="Produto" visible="true" foreignKey="prod_sk">
+    </DimensionUsage>
+    <Measure name="Quantidade" column="ift_quantfatc" datatype="Numeric" formatString="Standard" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Valor Venda" column="ift_valor" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Valor Lucro" column="lucro_item" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
