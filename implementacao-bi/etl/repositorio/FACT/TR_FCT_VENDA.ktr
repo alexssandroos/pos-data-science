@@ -428,7 +428,7 @@
     <created_user>-</created_user>
     <created_date>2018/05/26 10:12:30.112</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2018/05/26 14:08:30.144</modified_date>
+    <modified_date>2018/05/26 15:14:35.872</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -661,8 +661,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -708,8 +708,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -755,8 +755,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -802,8 +802,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -849,8 +849,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -896,8 +896,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -943,8 +943,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>
@@ -990,8 +990,8 @@ where opf.tof_tipdoc='V'</sql>
       <schema_name/>
     </partitioning>
     <connection>dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>dw</schema>

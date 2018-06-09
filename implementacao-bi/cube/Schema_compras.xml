@@ -1,0 +1,78 @@
+<Schema name="COMPRAS">
+  <Dimension type="StandardDimension" visible="true" name="Pessoa">
+    <Hierarchy name="Hierarchy" visible="true" hasAll="true" primaryKey="pes_sk">
+      <Table name="dim_pessoa" schema="public">
+      </Table>
+      <Level name="Nome" visible="true" column="pes_nom" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="Tipo" visible="true" table="dim_pessoa" column="pes_tip" nameColumn="pes_tip" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Loja">
+    <Hierarchy name="Hierarchy" visible="true" hasAll="true" primaryKey="loj_sk">
+      <Table name="dim_loja" schema="public" alias="">
+      </Table>
+      <Level name="Nome" visible="true" table="dim_loja" column="loj_denloj" uniqueMembers="false">
+      </Level>
+      <Level name="Codigo" visible="true" table="dim_loja" column="loj_codloj" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Produto">
+    <Hierarchy name="Item" visible="true" hasAll="true" primaryKey="prod_sk">
+      <Table name="dim_produto" schema="public">
+      </Table>
+      <Level name="Nome" visible="true" column="itm_descri" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="Marca" visible="true" table="dim_produto" column="itm_marca" nameColumn="itm_marca" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Grupo" visible="true" hasAll="true" primaryKey="prod_sk">
+      <Table name="dim_produto" schema="public" alias="">
+      </Table>
+      <Level name="Nome" visible="true" column="grp_dscgrp" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Tempo">
+    <Hierarchy name="Tempo" visible="true" hasAll="true" primaryKey="tem_id">
+      <Table name="dim_tem_tempo" schema="public">
+      </Table>
+      <Level name="Ano" visible="true" column="tem_num_ano" uniqueMembers="false">
+      </Level>
+      <Level name="Mes" visible="true" column="tem_num_mes" uniqueMembers="false" description="M&#234;s">
+      </Level>
+      <Level name="Dia" visible="true" column="tem_num_dia" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="TipoPagamento" description="Tipo Pagamento">
+    <Hierarchy name="TipoPagamento" visible="true" hasAll="true" primaryKey="tpg_sk" description="Tipo Pagamento">
+      <Table name="dim_tipo_pagamento" schema="public" alias="">
+      </Table>
+      <Level name="Nome" visible="true" column="tpg_destpg" nameColumn="tpg_destpg" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Compras" visible="true" cache="true" enabled="true">
+    <Table name="fct_compra" schema="public" alias="">
+    </Table>
+    <DimensionUsage source="Pessoa" name="Fornecedor" visible="true" foreignKey="vendedor_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Produto" name="Produto" visible="true" foreignKey="prod_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Loja" name="Loja" visible="true" foreignKey="loj_sk">
+    </DimensionUsage>
+    <DimensionUsage source="Tempo" name="Tempo" visible="true" foreignKey="tempo_sk">
+    </DimensionUsage>
+    <DimensionUsage source="TipoPagamento" name="TipoPagamento" visible="true" foreignKey="tipopag_sk">
+    </DimensionUsage>
+    <Measure name="Quantidade" column="ift_quantfatc" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="ValorItem" column="ift_valor" datatype="Numeric" aggregator="sum" description="Valor do Item" visible="true">
+    </Measure>
+    <Measure name="CustoItem" column="ift_custitm" datatype="Numeric" aggregator="sum" description="Custo do Item" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
