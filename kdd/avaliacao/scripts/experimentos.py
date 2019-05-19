@@ -2,7 +2,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 from pandas import read_csv
+from pandas import DataFrame
 import sys; sys.path.append('./scripts')
 import quality
 
@@ -27,4 +29,10 @@ def rfFeatureImportances(Dataframe, rfInstance, X_train_columns):
    feature_importance = Dataframe(rfInstance.feature_importances_,\
       index = X_train_columns, columns=['importance'])\
          .sort_values('importance', ascending=False)
-   return feature_importance      
+   return feature_importance   
+
+fi = rfFeatureImportances(DataFrame, rfc_trained,\
+df.drop(columns=['Event Clearance Description']).columns)
+
+svm = SVC(gamma='scale')
+svm_trained = quality.analise_modelo(svm, X_train, y_train, X_test, y_test)
