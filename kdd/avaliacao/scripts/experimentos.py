@@ -20,5 +20,11 @@ X_train, X_test, y_train, y_test = train_test_split(preditores,\
    classe, test_size=0.3, random_state=100)
 
 rfc = RandomForestClassifier(n_estimators=100, random_state=100)   
-quality.analise_modelo(rfc, X_train, y_train, X_test, y_test)
+rfc_trained = quality.analise_modelo(rfc, X_train, y_train, X_test, y_test)
 
+
+def rfFeatureImportances(Dataframe, rfInstance, X_train_columns):
+   feature_importance = Dataframe(rfInstance.feature_importances_,\
+      index = X_train_columns, columns=['importance'])\
+         .sort_values('importance', ascending=False)
+   return feature_importance      
