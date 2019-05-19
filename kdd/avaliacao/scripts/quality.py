@@ -5,7 +5,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 from numpy import sqrt , mean 
-
+from pandas import DataFrame
 
 def analise_modelo(model_instance, x_train, y_train, x_test, y_test):
   model_instance.fit(x_train, y_train)
@@ -38,3 +38,9 @@ def validaModelo(df, X_cols, Y_col, Modelo, Scaler, Metrica):
   y = df[Y_col].values
   y_predict = Modelo.predict(X)
   return Metrica(y, y_predict)  
+
+def featureImportances(rfInstance, X_train_columns):
+   feature_importance = DataFrame(rfInstance.feature_importances_,\
+      index = X_train_columns, columns=['importance'])\
+         .sort_values('importance', ascending=False)
+   return feature_importance
