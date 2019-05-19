@@ -15,10 +15,10 @@ def analise_modelo(model_instance, x_train, y_train, x_test, y_test):
   results.append({"RMSE": sqrt(mean_squared_error(y_test, y_pred))})
   results.append({"R2": r2_score(y_test, y_pred)})
   results.append({"MAE": mean_absolute_error(y_test, y_pred)})
-  #results.append({"Confusion Matrix": confusion_matrix(y_test, y_pred)})
+  results.append({"Confusion Matrix": confusion_matrix(y_test, y_pred)})
   #results.append({"F1 Score": f1_score(y_test, y_pred)})
   #results.append({"AUC ROC": roc_auc_score(y_test, y_pred)})
-  #print(classification_report(y_test, y_pred))
+  print(classification_report(y_test, y_pred))
   print(results)
   return model_instance
 
