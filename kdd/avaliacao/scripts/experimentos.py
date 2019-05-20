@@ -1,6 +1,7 @@
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from pandas import read_csv
@@ -81,4 +82,36 @@ lr_trained = quality.analise_modelo(lr, X_train, y_train, X_test, y_test)
 #  [   14,     4,    52,    11,   818,    10,     9],
 #  [   31,    14,   221,   286,    20, 10337,   347],
 #  [  457,    37,   273,    89,     4,   706,  1471]])}]
+
+
+# validacao cruzada e acuracia dos modelos
+
+valida_rf = quality.KFoldEstratificado(rfc, preditores, classe, 10, quality.accuracy_score)
+#[['accuracy_score', 0.7785226433011777],
+# ['cross_val_score', 0.7683305920264262]]
+valida_lr = quality.KFoldEstratificado(lr, preditores, classe, 10, quality.accuracy_score)
+
+
+# GridSearch 
+params_rfc = { 
+    'n_estimators': [100,200, 500],
+    'max_features': ['auto', 'sqrt', 'log2'],
+    'max_depth' : [4,5,6,7,8],
+    'criterion' :['gini', 'entropy']
+}
+CV_rfc = GridSearchCV(estimator=rfc, param_grid=params_rfc, cv= 10)
+CV_rfc.fit(X_train, y_train)
+#best params
+#{'criterion': 'entropy',
+# 'max_depth': 8,
+# 'max_features': 'auto',
+# 'n_estimators': 100}
+
+params_lr = {"C":np.logspace(-3,3,7),
+ "penalty":["l1","l2"]}
+CV_lr = GridSearchCV(estimator=lr, param_grid=params_lr, cv= 10)
+CV_lr.fit(X_train, y_train)
+#best params
+# {'C': 1.0, 'penalty': 'l1'}
+
 
