@@ -147,4 +147,4 @@ lr = LogisticRegression(solver='newton-cg', multi_class='multinomial')
 lr.fit(preditores, classe)
 validaModelo(df_val, preditores_val, 'Event Clearance Description',\
    lr, scaler, quality.accuracy_score)
-#   
+#0.7598798746518106   
