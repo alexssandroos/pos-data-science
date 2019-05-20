@@ -39,8 +39,10 @@ CV_rfc.fit(X_train, y_train)
 # 'max_features': 'auto',
 # 'n_estimators': 100}
 
-params_lr = {"C":logspace(-3,3,7),
- "penalty":["l1","l2"]}
+params_lr = {"C":logspace(-3,3,7),\
+    "penalty":["l1","l2"], \
+    "solver" : ["newton-cg", "lbfgs", "liblinear", "sag"]}
+
 CV_lr = GridSearchCV(estimator=lr, param_grid=params_lr, cv= 10, n_jobs=3)
 CV_lr.fit(X_train, y_train)
 #best params
