@@ -58,11 +58,10 @@ df['HourOfOriginal'].value_counts()
 
 cols_to_ohe = ['Call Type', 'Priority','Initial Call Type',\
    'Final Call Type', 'Precinct', 'Sector', 'Beat']
-
 for col in cols_to_ohe:
     df = utils.set_onehotencoding(dataframe=df, coluna=col, prefixo=col)
-cols_to_remove = [ 'Original Time Queued','Arrived Time']
 
+cols_to_remove = [ 'Original Time Queued','Arrived Time']
 df.drop(columns=cols_to_remove, inplace=True)
 
 corr = df.corr()

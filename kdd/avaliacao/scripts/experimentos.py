@@ -85,9 +85,9 @@ lr_trained = quality.analise_modelo(lr, X_train, y_train, X_test, y_test)
 #  [  457,    37,   273,    89,     4,   706,  1471]])}]
 
 # validacao cruzada e acuracia dos modelos
-valida_rf = quality.KFoldEstratificado(rfc, preditores, classe, 10, quality.accuracy_score)
-#[['accuracy_score', 0.7785226433011777],
+valida_rf = quality.KFoldEstratificado(rfc, preditores, classe, 10, quality.f1_score)
+#[['f1_score', 0.7785226433011777],
 # ['cross_val_score', 0.7683305920264262]]
-valida_lr = quality.KFoldEstratificado(lr, preditores, classe, 10, quality.accuracy_score)
-#[['accuracy_score', 0.7847171182312669],
+valida_lr = quality.KFoldEstratificado(lr, preditores, classe, 10, quality.f1_score)
+#[['f1_score', 0.7847171182312669],
 # ['cross_val_score', 0.7832486651217272]]
