@@ -54,7 +54,7 @@ rfc_trained = quality.analise_modelo(rfc, X_train, y_train, X_test, y_test)
 fi = quality.featureImportances(rfc_trained,\
 df.drop(columns=['Event Clearance Description']).columns)
 
-lr = LogisticRegression(solver='lbfgs', multi_class='multinomial')
+lr = LogisticRegression(solver='newton-cg', multi_class='multinomial')
 lr_trained = quality.analise_modelo(lr, X_train, y_train, X_test, y_test)
 #              precision    recall  f1-score   support
 #
@@ -90,6 +90,8 @@ valida_rf = quality.KFoldEstratificado(rfc, preditores, classe, 10, quality.accu
 #[['accuracy_score', 0.7785226433011777],
 # ['cross_val_score', 0.7683305920264262]]
 valida_lr = quality.KFoldEstratificado(lr, preditores, classe, 10, quality.accuracy_score)
+#[['accuracy_score', 0.7847171182312669],
+# ['cross_val_score', 0.7832486651217272]]
 
 
 # GridSearch 
@@ -114,3 +116,35 @@ CV_lr.fit(X_train, y_train)
 #best params
 # {'C': 1.0, 'penalty': 'l1'}
 
+# previsao com dataset test
+# inicialmente não foi possível fazer o treinamento pois 
+# apos o one hot encoding as matrizes ficaram de tamanhos diferentes.
+# retreinei os modelos apenas com os preditores semelhantes entre os 
+# dataframes.
+lista_df =  list(df.columns)
+lista_val = list(df_val.columns)
+colunas_val = list(filter(lambda x: x in lista_df, lista_val))
+colunas_df = list(filter(lambda x: x in lista_val, lista_df))
+
+df_val = read_csv('./data/call_data_VAL_ML.csv')
+df_val['Event Clearance Description'] = le.fit_transform(df_val['Event Clearance Description'])
+classe_val = df_val['Event Clearance Description'].values
+preditores_val = df_val[colunas_df].drop(columns=['Event Clearance Description'])
+
+df = pd.read_csv("./data/call_data_ML.csv")
+df['Event Clearance Description'] = le.fit_transform(df['Event Clearance Description'])
+classe = df['Event Clearance Description'].values
+preditores = df[colunas_val].drop(columns=['Event Clearance Description'])
+preditores = scaler.fit_transform(preditores)
+
+rfc = RandomForestClassifier(n_estimators=100, random_state=100)
+rfc.fit(preditores, classe)
+validaModelo(df_val, preditores_val.columns,'Event Clearance Description',\
+    rfc, scaler, quality.accuracy_score)
+#0.7563544568245125
+
+lr = LogisticRegression(solver='newton-cg', multi_class='multinomial')
+lr.fit(preditores, classe)
+validaModelo(df_val, preditores_val, 'Event Clearance Description',\
+   lr, scaler, quality.accuracy_score)
+#   
