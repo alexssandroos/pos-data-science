@@ -114,4 +114,3 @@ CV_lr.fit(X_train, y_train)
 #best params
 # {'C': 1.0, 'penalty': 'l1'}
 
-
